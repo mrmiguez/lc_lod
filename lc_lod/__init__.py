@@ -1,6 +1,7 @@
-from .naf import *
-from .tgm import *
-from .lcsh import *
+from .genre import *
+from .name import *
+from .subject import *
+from .title import *
 
 """
 # copied over from development implementation: assets/lc_vocab
