@@ -33,6 +33,7 @@ class TGMQuery(LinkedDataQuery):
         else:
             return None
 
+
 class LCSHQuery(LinkedDataQuery):
     """"""
 
@@ -40,7 +41,24 @@ class LCSHQuery(LinkedDataQuery):
         LinkedDataQuery.__init__(self)
 
     def query(self, term):
-        return term, f'uri:lcsh-{term}', 'lcsh'
+        # return term, f'uri:lcsh-{term}', 'lcsh'
+        term = term.replace(u"\u2014", '--').replace(u"\u2013", '--')
+        search = requests.get(
+            'http://id.loc.gov/authorities/subjects/label/{0}'.format(urllib.parse.quote(term)),
+            timeout=5)
+        if search.status_code == 200:
+            request = requests.get(f'{search.url.rstrip(".html")}.madsrdf.json').json()
+            for item in request:
+                if 'http://www.loc.gov/mads/rdf/v1#authoritativeLabel' in item.keys():
+                    return item['http://www.loc.gov/mads/rdf/v1#authoritativeLabel'][0]['@value'], item['@id'], "lcsh"
+                elif 'http://www.loc.gov/mads/rdf/v1#useInstead' in item.keys():
+                    use_instead = item['http://www.loc.gov/mads/rdf/v1#useInstead'][0]['@id']
+                    r = requests.get(f'{use_instead.url.rstrip(".html")}.madsrdf.json').json()
+                    for i in r:
+                        if 'http://www.loc.gov/mads/rdf/v1#authoritativeLabel' in i.keys():
+                            return i['http://www.loc.gov/mads/rdf/v1#authoritativeLabel'][0]['@value'], i['@id'], "lcsh"
+        else:
+            return None
 
 
 class FASTQuery(LinkedDataQuery):

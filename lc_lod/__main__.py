@@ -6,7 +6,7 @@ print(ldo)
 sub = LinkedDataSubject("Buildings")
 sub.search()
 print(sub)
-sub = LinkedDataSubject("Potato").search()
+sub = LinkedDataSubject("School sports--Fiction").search()
 try:
     print(sub.term, sub.uri, sub.vocab)
 except AttributeError:
