@@ -11,7 +11,7 @@ setup(
     name="lc_lod",
     version="0.0.1",
     packages=find_packages(exclude=['tests*']),
-    # install_requires=['lxml >= 2.3'],
+    install_requires=['requests'],
     author="Matthew Miguez",
     author_email="r.m.miguez@gmail.com",
     description="",
