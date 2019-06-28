@@ -1,4 +1,5 @@
 from .query import *
+from .exceptions import *
 
 
 class LinkedDataObject(object):
@@ -18,20 +19,15 @@ class LinkedDataSubject(LinkedDataObject):
 
     def __init__(self, term):
         LinkedDataObject.__init__(self, term)
-
-    def search(self):
-        """"""
         while self.uri is None:
-            for klass in TGMQuery, LCSHQuery, FASTQuery:
+            for klass in TGMQuery, LCSHQuery:
                 obj = klass()
-                print(f'{obj.__class__.__name__} is searching for {self.term}')  # test
                 q = obj.query(self.term)
-                print(f'{obj.__class__.__name__} has found {q}')  # test
                 if q:
-                    self.term, self.uri, self.vocab = q
+                    self.term, self.uri, self.vocab, self.raw = q
                     break
             else:
-                raise ValueError  # todo: class exception
+                raise LinkedDataObjectException(f'Term--{self.term}--not found.')
 
 
 class LinkedDataName(LinkedDataObject):

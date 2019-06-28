@@ -1,5 +1,6 @@
 from .ld_object import *
 from .query import *
+from .exceptions import *
 
 #from .genre import *
 #from .name import *
