@@ -29,12 +29,27 @@ class LinkedDataSubject(LinkedDataObject):
             else:
                 raise LinkedDataObjectException(f'Term--{self.term}--not found.')
 
+    def detail(self):
+        """"""
+
 
 class LinkedDataName(LinkedDataObject):
     """"""
 
     def __init__(self, term):
         LinkedDataObject.__init__(self, term)
+        while self.uri is None:
+            for klass in NAFQuery, VIAFQuery, WikiDataQuery:
+                obj = klass()
+                q = obj.query(self.term)
+                if q:
+                    self.term, self.uri, self.vocab, self.raw = q
+                    break
+            else:
+                raise LinkedDataObjectException(f'Term--{self.term}--not found.')
+
+    def detail(self):
+        """"""
 
 
 class LinkedDataGenre(LinkedDataObject):

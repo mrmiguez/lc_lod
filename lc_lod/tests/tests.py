@@ -25,3 +25,17 @@ class LinkedDataSubjectTests(unittest.TestCase):
         self.assertEqual("lctgm", self.tgm_term.vocab)
         self.assertEqual("lctgm", self.redirect_term.vocab)
         self.assertEqual("lcsh", self.lcsh_term.vocab)
+
+
+class LinkedDataNameTests(unittest.TestCase):
+    def setUp(self):
+        self.lcnaf_name = ld_object.LinkedDataName("Florida State University")
+
+    def test_subject_term(self):
+        self.assertEqual("Florida State University", self.lcnaf_name.term)
+
+    def test_subject_uri(self):
+        self.assertEqual("http://id.loc.gov/authorities/names/n80126238", self.lcnaf_name.uri)
+
+    def test_subject_vocab(self):
+        self.assertEqual("naf", self.lcnaf_name.vocab)
