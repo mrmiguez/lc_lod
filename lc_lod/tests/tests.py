@@ -39,3 +39,19 @@ class LinkedDataNameTests(unittest.TestCase):
 
     def test_subject_vocab(self):
         self.assertEqual("naf", self.lcnaf_name.vocab)
+
+
+# class LinkedDataGenreTests(unittest.TestCase):
+#     def setUp(self):
+#         self.gmgpc_term = ld_object.LinkedDataGenre("")
+#         self.lcgft_term = ld_object.LinkedDataGenre("")
+#         self.marcgt_term = ld_object.LinkedDataGenre("")
+#
+#     def test_subject_term(self):
+#         self.assertEqual("", self.gmgpc_term.term)
+#
+#     def test_subject_uri(self):
+#         self.assertEqual("", self.gmgpc_term.uri)
+#
+#     def test_subject_vocab(self):
+#         self.assertEqual("gmgpc", self.gmgpc_term.vocab)
