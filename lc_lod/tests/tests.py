@@ -1,6 +1,6 @@
 import unittest
 
-from lc_lod import ld_object
+from lc_lod import *
 
 #sub_list = ['', 'Astrophysics', '', 'Florida State University']
 
@@ -30,15 +30,19 @@ class LinkedDataSubjectTests(unittest.TestCase):
 class LinkedDataNameTests(unittest.TestCase):
     def setUp(self):
         self.lcnaf_name = ld_object.LinkedDataName("Florida State University")
+        self.viaf_name = ld_object.LinkedDataName("Florida International University", services=[VIAFQuery])
 
-    def test_subject_term(self):
+    def test_name_term(self):
         self.assertEqual("Florida State University", self.lcnaf_name.term)
+        self.assertEqual("Florida International University", self.viaf_name.term)
 
-    def test_subject_uri(self):
+    def test_name_uri(self):
         self.assertEqual("http://id.loc.gov/authorities/names/n80126238", self.lcnaf_name.uri)
+        self.assertEqual("http://viaf.org/viaf/134215376", self.viaf_name.uri)
 
-    def test_subject_vocab(self):
+    def test_name_vocab(self):
         self.assertEqual("naf", self.lcnaf_name.vocab)
+        self.assertEqual("viaf", self.viaf_name.vocab)
 
 
 # class LinkedDataGenreTests(unittest.TestCase):
@@ -47,11 +51,11 @@ class LinkedDataNameTests(unittest.TestCase):
 #         self.lcgft_term = ld_object.LinkedDataGenre("")
 #         self.marcgt_term = ld_object.LinkedDataGenre("")
 #
-#     def test_subject_term(self):
+#     def test_genre_term(self):
 #         self.assertEqual("", self.gmgpc_term.term)
 #
-#     def test_subject_uri(self):
+#     def test_genre_uri(self):
 #         self.assertEqual("", self.gmgpc_term.uri)
 #
-#     def test_subject_vocab(self):
+#     def test_genre_vocab(self):
 #         self.assertEqual("gmgpc", self.gmgpc_term.vocab)

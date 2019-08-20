@@ -58,3 +58,15 @@ class LinkedDataGenre(LinkedDataObject):
 
     def __init__(self, term, services=[GMGPCQuery, LCGFTQuery, MARCGTQuery]):
         LinkedDataObject.__init__(self, term)
+        while self.raw is None:
+            for klass in services:
+                obj = klass()
+                q = obj.query(self.term)
+                if q:
+                    self.term, self.uri, self.raw, self.vocab = q
+                    break
+            else:
+                raise LinkedDataObjectException(f'Term--{self.term}--not found.')
+
+    def detail(self):
+        """"""

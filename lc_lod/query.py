@@ -1,6 +1,7 @@
 from .ld_object import *
 import requests
 import urllib
+import json
 
 
 class LinkedDataQuery(requests.Request):
@@ -91,8 +92,14 @@ class VIAFQuery(LinkedDataQuery):
     def __init__(self):
         LinkedDataQuery.__init__(self)
 
-    def query(self):
-        return NotImplemented
+    def query(self, term):
+        search = requests.get('http://viaf.org/viaf/AutoSuggest?query=' + urllib.parse.quote(term), timeout=15)
+        if search.status_code == 200:
+            for item in json.loads(search.text)['result']:
+                if term.lower() == item['term'].lower():
+                    uri = 'http://viaf.org/viaf/' + item['recordID']
+                    raw = requests.get(uri + '/viaf.json').json()
+                    return raw['mainHeadings']['mainHeadingEl'][0]['datafield']['subfield']['#text'], uri, raw, 'viaf'
 
 
 class WikiDataQuery(LinkedDataQuery):
@@ -100,7 +107,7 @@ class WikiDataQuery(LinkedDataQuery):
     def __init__(self):
         LinkedDataQuery.__init__(self)
 
-    def query(self):
+    def query(self, term):
         return NotImplemented
 
 
